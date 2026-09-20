@@ -96,6 +96,9 @@ Model `App\Models\Building` — table `buildings`, migration
   `?type=` filtering and per-page totals.
 - `database/seeders/BuildingSeeder.php` — 12 starter buildings, idempotent via
   `updateOrCreate()` on `name`.
+- `app/Console/Commands/InitApp.php` — `php artisan app:init`, runs the setup chain
+  (currently `migrate:fresh`; later steps such as seeding belong in its `$steps` array).
+  Wipes data, so it prompts unless `--force` is passed.
 - Views in `resources/views/buildings/` (`index`, `show`, `create`, `edit`, shared
   `_form` partial), layout in `resources/views/layouts/app.blade.php`.
 </project-guidelines>
