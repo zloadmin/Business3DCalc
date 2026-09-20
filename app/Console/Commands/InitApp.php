@@ -21,6 +21,11 @@ class InitApp extends Command
             'description' => 'Refreshing migrations',
             'arguments' => ['--force' => true],
         ],
+        [
+            'command' => 'buildings:create',
+            'description' => 'Creating buildings',
+            'arguments' => [],
+        ],
     ];
 
     /**

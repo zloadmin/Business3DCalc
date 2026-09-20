@@ -97,8 +97,11 @@ Model `App\Models\Building` — table `buildings`, migration
 - `database/seeders/BuildingSeeder.php` — 12 starter buildings, idempotent via
   `updateOrCreate()` on `name`.
 - `app/Console/Commands/InitApp.php` — `php artisan app:init`, runs the setup chain
-  (currently `migrate:fresh`; later steps such as seeding belong in its `$steps` array).
+  (`migrate:fresh`, then `buildings:create`; later steps belong in its `$steps` array).
   Wipes data, so it prompts unless `--force` is passed.
+- `app/Console/Commands/CreateBuildings.php` — `php artisan buildings:create`, creates
+  the 16 starter buildings (4 per type: Hotel, Police/Hospital, Shop, Windmill).
+  Idempotent via `firstOrCreate()` on `name`, so it never duplicates on re-run.
 - Views in `resources/views/buildings/` (`index`, `show`, `create`, `edit`, shared
   `_form` partial), layout in `resources/views/layouts/app.blade.php`.
 </project-guidelines>
