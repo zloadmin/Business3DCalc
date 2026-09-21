@@ -13,15 +13,20 @@ return new class extends Migration
     {
         Schema::create('buildings', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('building_time')->default(0);
             $table->string('name');
             $table->string('type');
             $table->unsignedBigInteger('price')->default(0);
             $table->unsignedBigInteger('income')->default(0);
-            $table->decimal('upgrade_coefficient', 8, 3)->default(1.000);
-            $table->unsignedInteger('employees_count')->default(0);
-            $table->unsignedInteger('residents_count')->default(0);
-            $table->integer('happiness')->default(0);
-            $table->integer('attractiveness')->default(0);
+            $table->decimal('upgrade_time_coefficient', 8, 3)->default(5.000);
+            $table->decimal('upgrade_price_coefficient', 8, 3)->default(1.2);
+            $table->unsignedInteger('employees')->default(0);
+            $table->unsignedInteger('residents')->default(0);
+            $table->unsignedInteger('residents_capacity')->default(0);
+            $table->decimal('happiness', 2)->default(0);
+            $table->decimal('attractiveness', 2)->default(0);
+            $table->unsignedInteger('city_capacity')->default(100);
+            $table->unsignedInteger('city_population')->default(70);
             $table->timestamps();
 
             $table->index('type');

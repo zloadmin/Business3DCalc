@@ -21,7 +21,7 @@ class BuildingCrudTest extends TestCase
             'type' => BuildingType::Shopping->value,
             'price' => 100_000,
             'income' => 5_000,
-            'upgrade_coefficient' => 1.5,
+            'upgrade_time_coefficient' => 1.5,
             'employees_count' => 20,
             'residents_count' => 0,
             'happiness' => 5,
@@ -110,11 +110,11 @@ class BuildingCrudTest extends TestCase
         $this->assertDatabaseCount('buildings', 0);
     }
 
-    public function test_upgrade_coefficient_must_be_at_least_one(): void
+    public function test_upgrade_time_coefficient_must_be_at_least_one(): void
     {
-        $response = $this->post(route('buildings.store'), $this->payload(['upgrade_coefficient' => 0.5]));
+        $response = $this->post(route('buildings.store'), $this->payload(['upgrade_time_coefficient' => 0.5]));
 
-        $response->assertSessionHasErrors('upgrade_coefficient');
+        $response->assertSessionHasErrors('upgrade_time_coefficient');
         $this->assertDatabaseCount('buildings', 0);
     }
 

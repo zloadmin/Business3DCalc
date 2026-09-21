@@ -6,6 +6,7 @@ use App\Enums\BuildingType;
 use App\Http\Requests\StoreBuildingRequest;
 use App\Http\Requests\UpdateBuildingRequest;
 use App\Models\Building;
+use App\Services\BuildingUpgradeCalculator;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -21,25 +22,17 @@ class BuildingController extends Controller
 
         $buildings = Building::query()
             ->when($type, fn ($query) => $query->ofType($type))
-            ->orderBy('type')
-            ->orderBy('name')
+            ->orderBy('id')
+//            ->orderBy('name')
             ->paginate(20)
             ->withQueryString();
 
-        $totals = [
-            'price' => (int) $buildings->getCollection()->sum('price'),
-            'income' => (int) $buildings->getCollection()->sum('income'),
-            'employees_count' => (int) $buildings->getCollection()->sum('employees_count'),
-            'residents_count' => (int) $buildings->getCollection()->sum('residents_count'),
-            'happiness' => (int) $buildings->getCollection()->sum('happiness'),
-            'attractiveness' => (int) $buildings->getCollection()->sum('attractiveness'),
-        ];
+
 
         return view('buildings.index', [
             'buildings' => $buildings,
             'types' => BuildingType::options(),
             'type' => $type,
-            'totals' => $totals,
         ]);
     }
 
@@ -88,6 +81,21 @@ class BuildingController extends Controller
         return view('buildings.edit', [
             'building' => $building,
             'types' => BuildingType::options(),
+        ]);
+    }
+
+    /**
+     * Display the upgrade schedule for the given building.
+     */
+    public function updates(Building $building): View
+    {
+
+        $calculator = new BuildingUpgradeCalculator;
+
+        return view('buildings.updates', [
+            'building' => $building,
+//            'rows' => $calculator->schedule($building, 100),
+//            'calculator' => $calculator,
         ]);
     }
 

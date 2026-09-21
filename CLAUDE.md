@@ -72,7 +72,7 @@ Model `App\Models\Building` — table `buildings`, migration
 | `type` | string | Enum `App\Enums\BuildingType` |
 | `price` | unsignedBigInteger | Build cost |
 | `income` | unsignedBigInteger | Money generated per period |
-| `upgrade_coefficient` | decimal(8,3) | Income multiplier per upgrade level, 1.000–10 |
+| `upgrade_time_coefficient` | decimal(8,3) | Income multiplier per upgrade level, 1.000–10 |
 | `employees_count` | unsignedInteger | Staff required |
 | `residents_count` | unsignedInteger | **Living buildings only** |
 | `happiness` | integer | −100…100 |
@@ -88,7 +88,7 @@ Model `App\Models\Building` — table `buildings`, migration
   `residents_count = 0` in `prepareForValidation()` on both `StoreBuildingRequest` and
   `UpdateBuildingRequest`. Index/show views render `—` instead of a number.
 - **Upgrade coefficient is a per-level multiplier.** `Building::incomeAtLevel(int)`
-  computes `income * upgrade_coefficient^(level-1)`; level 1 is the base building.
+  computes `income * upgrade_time_coefficient^(level-1)`; level 1 is the base building.
 
 ### Supporting files
 

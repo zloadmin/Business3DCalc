@@ -44,9 +44,10 @@
                     <th scope="col" class="px-4 py-3 font-medium">{{ __('Type') }}</th>
                     <th scope="col" class="px-4 py-3 text-right font-medium">{{ __('Price') }}</th>
                     <th scope="col" class="px-4 py-3 text-right font-medium">{{ __('Income') }}</th>
-                    <th scope="col" class="px-4 py-3 text-right font-medium">{{ __('Upgrade coef.') }}</th>
+                    <th scope="col" class="px-4 py-3 text-right font-medium">{{ __('Upgrade time coefficient') }}</th>
+                    <th scope="col" class="px-4 py-3 text-right font-medium">{{ __('Upgrade price coefficient') }}</th>
                     <th scope="col" class="px-4 py-3 text-right font-medium">{{ __('Employees') }}</th>
-                    <th scope="col" class="px-4 py-3 text-right font-medium">{{ __('Residents') }}</th>
+                    <th scope="col" class="px-4 py-3 text-right font-medium">{{ __('Residents capacity') }}</th>
                     <th scope="col" class="px-4 py-3 text-right font-medium">{{ __('Happiness') }}</th>
                     <th scope="col" class="px-4 py-3 text-right font-medium">{{ __('Attractiveness') }}</th>
                     <th scope="col" class="px-4 py-3 text-right font-medium">{{ __('Actions') }}</th>
@@ -64,16 +65,11 @@
                             </span>
                         </td>
                         <td class="px-4 py-3 text-right tabular-nums">{{ number_format($building->price, 0, '.', ' ') }}</td>
-                        <td class="px-4 py-3 text-right tabular-nums">{{ number_format($building->income, 0, '.', ' ') }}</td>
-                        <td class="px-4 py-3 text-right tabular-nums">{{ number_format((float) $building->upgrade_coefficient, 3, '.', '') }}</td>
-                        <td class="px-4 py-3 text-right tabular-nums">{{ number_format($building->employees_count, 0, '.', ' ') }}</td>
-                        <td class="px-4 py-3 text-right tabular-nums">
-                            @if ($building->type->providesResidents())
-                                {{ number_format($building->residents_count, 0, '.', ' ') }}
-                            @else
-                                <span class="text-slate-400">—</span>
-                            @endif
-                        </td>
+                        <td class="px-4 py-3 text-right tabular-nums">{{ number_format($building->getIncome(1), 0, '.', ' ') }}</td>
+                        <td class="px-4 py-3 text-right tabular-nums">{{ number_format((float) $building->upgrade_time_coefficient, 3, '.', '') }}</td>
+                        <td class="px-4 py-3 text-right tabular-nums">{{ number_format((float) $building->upgrade_price_coefficient, 3, '.', '') }}</td>
+                        <td class="px-4 py-3 text-right tabular-nums">{{ number_format($building->employees, 0, '.', ' ') }}</td>
+                        <td class="px-4 py-3 text-right tabular-nums">{{ number_format($building->residents_capacity, 0, '.', ' ') }}</td>
                         <td class="px-4 py-3 text-right tabular-nums">
                             <span class="{{ $building->happiness < 0 ? 'text-rose-600' : 'text-emerald-600' }}">
                                 {{ $building->happiness > 0 ? '+' : '' }}{{ $building->happiness }}
@@ -85,6 +81,7 @@
                             </span>
                         </td>
                         <td class="whitespace-nowrap px-4 py-3 text-right">
+                            <a href="{{ route('buildings.updates', $building) }}" target="_blank" class="font-medium  text-blue-900 hover:underline">{{ __('Updates') }}</a>
                             <a href="{{ route('buildings.edit', $building) }}" class="font-medium text-slate-700 hover:underline">{{ __('Edit') }}</a>
                             <form method="POST" action="{{ route('buildings.destroy', $building) }}" class="inline-block" onsubmit="return confirm('{{ __('Delete this building?') }}')">
                                 @csrf
@@ -101,21 +98,7 @@
                     </tr>
                 @endforelse
             </tbody>
-            @if ($buildings->isNotEmpty())
-                <tfoot class="bg-slate-50 text-xs font-medium text-slate-700">
-                    <tr>
-                        <td colspan="2" class="px-4 py-3">{{ __('Page total') }}</td>
-                        <td class="px-4 py-3 text-right tabular-nums">{{ number_format($totals['price'], 0, '.', ' ') }}</td>
-                        <td class="px-4 py-3 text-right tabular-nums">{{ number_format($totals['income'], 0, '.', ' ') }}</td>
-                        <td class="px-4 py-3"></td>
-                        <td class="px-4 py-3 text-right tabular-nums">{{ number_format($totals['employees_count'], 0, '.', ' ') }}</td>
-                        <td class="px-4 py-3 text-right tabular-nums">{{ number_format($totals['residents_count'], 0, '.', ' ') }}</td>
-                        <td class="px-4 py-3 text-right tabular-nums">{{ number_format($totals['happiness'], 0, '.', ' ') }}</td>
-                        <td class="px-4 py-3 text-right tabular-nums">{{ number_format($totals['attractiveness'], 0, '.', ' ') }}</td>
-                        <td class="px-4 py-3"></td>
-                    </tr>
-                </tfoot>
-            @endif
+
         </table>
     </div>
 

@@ -25,7 +25,7 @@ class BuildingFactory extends Factory
             'type' => $type,
             'price' => $this->faker->numberBetween(1_000, 500_000),
             'income' => $this->faker->numberBetween(100, 20_000),
-            'upgrade_coefficient' => $this->faker->randomFloat(3, 1.05, 3.0),
+            'upgrade_time_coefficient' => $this->faker->randomFloat(3, 1.05, 3.0),
             'employees_count' => $this->faker->numberBetween(0, 200),
             'residents_count' => $type === BuildingType::Living
                 ? $this->faker->numberBetween(1, 500)

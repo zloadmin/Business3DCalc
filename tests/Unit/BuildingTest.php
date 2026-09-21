@@ -24,11 +24,11 @@ class BuildingTest extends TestCase
         $this->assertFalse(BuildingType::Production->providesResidents());
     }
 
-    public function test_income_at_level_applies_the_upgrade_coefficient(): void
+    public function test_income_at_level_applies_the_upgrade_time_coefficient(): void
     {
         $building = new Building([
             'income' => 1000,
-            'upgrade_coefficient' => 1.5,
+            'upgrade_time_coefficient' => 1.5,
         ]);
 
         $this->assertSame(1000.0, $building->incomeAtLevel(1));
@@ -40,7 +40,7 @@ class BuildingTest extends TestCase
     {
         $building = new Building([
             'income' => 1000,
-            'upgrade_coefficient' => 1.5,
+            'upgrade_time_coefficient' => 1.5,
         ]);
 
         $this->assertSame(0.0, $building->incomeAtLevel(0));
@@ -65,7 +65,7 @@ class BuildingTest extends TestCase
             'type',
             'price',
             'income',
-            'upgrade_coefficient',
+            'upgrade_time_coefficient',
             'employees_count',
             'residents_count',
             'happiness',

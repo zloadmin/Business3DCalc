@@ -45,13 +45,13 @@
     </div>
 
     <div>
-        <label for="upgrade_coefficient" class="block text-sm font-medium text-slate-700">{{ __('Upgrade coefficient') }}</label>
-        <input type="number" name="upgrade_coefficient" id="upgrade_coefficient"
-            value="{{ old('upgrade_coefficient', $building->exists ? number_format((float) $building->upgrade_coefficient, 3, '.', '') : '1.000') }}"
+        <label for="upgrade_time_coefficient" class="block text-sm font-medium text-slate-700">{{ __('Upgrade coefficient') }}</label>
+        <input type="number" name="upgrade_time_coefficient" id="upgrade_time_coefficient"
+            value="{{ old('upgrade_time_coefficient', $building->exists ? number_format((float) $building->upgrade_time_coefficient, 3, '.', '') : '1.000') }}"
             required min="1" max="10" step="0.001"
             class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-slate-500 focus:ring-slate-500 sm:text-sm">
         <p class="mt-1 text-xs text-slate-500">{{ __('Income multiplier applied per upgrade level.') }}</p>
-        @error('upgrade_coefficient')
+        @error('upgrade_time_coefficient')
             <p class="mt-1 text-sm text-rose-600">{{ $message }}</p>
         @enderror
     </div>

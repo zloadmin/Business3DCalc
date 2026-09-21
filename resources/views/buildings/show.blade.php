@@ -15,6 +15,9 @@
         </div>
 
         <div class="flex items-center gap-4">
+            <a href="{{ route('buildings.updates', $building) }}" class="rounded-md bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-700">
+                {{ __('Upgrade schedule') }}
+            </a>
             <a href="{{ route('buildings.edit', $building) }}" class="rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
                 {{ __('Edit') }}
             </a>
@@ -43,7 +46,7 @@
                 </div>
                 <div class="flex justify-between py-2">
                     <dt class="text-slate-600">{{ __('Upgrade coefficient') }}</dt>
-                    <dd class="font-medium tabular-nums">{{ number_format((float) $building->upgrade_coefficient, 3, '.', '') }}</dd>
+                    <dd class="font-medium tabular-nums">{{ number_format((float) $building->upgrade_time_coefficient, 3, '.', '') }}</dd>
                 </div>
                 <div class="flex justify-between py-2">
                     <dt class="text-slate-600">{{ __('Employees') }}</dt>
