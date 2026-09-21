@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Building;
+use App\Models\GameSession;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
@@ -18,7 +19,7 @@ class CreateFormulaPrompt extends Command
     public function handle()
     {
         $this->info('Create formula to calc best building in current period or update exists');
-        $this->info('In start we have 0 buildings. 0 Happy level & 0 Attractiveness level');
+        $this->info('In start we have 0 buildings. 50 Happy level & 50 Attractiveness level');
         $this->info('Keep levels more then 0');
         $this->info('Earn as much money as possible and use it to build or upgrade buildings. The building limit is 100.');
         $this->info('Result of your work formula');
@@ -37,6 +38,14 @@ class CreateFormulaPrompt extends Command
         $this->info('How calc income');
         $this->info('```');
         $this->info($this->getMethodCode(Building::class, 'getIncome'));
+        $this->info('```');
+        $this->info('How calc happiness');
+        $this->info('```');
+        $this->info($this->getMethodCode(GameSession::class, 'getHappiness'));
+        $this->info('```');
+        $this->info('How calc attractiveness');
+        $this->info('```');
+        $this->info($this->getMethodCode(GameSession::class, 'getAttractiveness'));
         $this->info('```');
 
     }

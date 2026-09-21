@@ -226,7 +226,7 @@ class Building extends Model
         ];
     }
 
-    public function getIncome(int $level): float
+    public function getIncome(int $level = 1): float
     {
         return round($this->income * $level) * 5;
     }
@@ -256,7 +256,7 @@ class Building extends Model
         return ($this->price * $this->upgrade_price_coefficient) * ($level * $this->upgrade_price_coefficient);
     }
 
-    public function getUpgradeTime(int $level): int
+    public function getUpgradeTime(int $level = 2): int
     {
         return $this->roundTime(60 * ($level * $this->upgrade_time_coefficient));
     }
@@ -316,32 +316,32 @@ class Building extends Model
         if ($this->type->providesResidents()) return $this->residents_capacity * pow($level, 0.5);
         return 0;
     }
-    public function getHappiness(int $level): float
+    public function getHappiness(int $level = 1): float
     {
         return round(
                 ($this->happiness * (1 + log($level, 2))) / 0.02
             ) * 0.02;
     }
-    public function getAttractiveness(int $level): float
+    public function getAttractiveness(int $level = 1): float
     {
         return round(
                 ($this->attractiveness * (1 + log($level, 2))) / 0.04
             ) * 0.04;
 
-        $baseAttractiveness = 4 * (1 + log($level, 2));
-
-        $load = $this->city_population / $this->city_capacity;
-
-        if ($load <= 0.8) {
-            $multiplier = 1;
-        } else {
-            $penalty = ($load - 0.8) / 0.4;
-            $multiplier = max(0, 1 - $penalty);
-        }
-
-        $attractiveness = $baseAttractiveness * $multiplier;
-
-        return round($attractiveness / 0.05) * 0.05;
+//        $baseAttractiveness = 4 * (1 + log($level, 2));
+//
+//        $load = $this->city_population / $this->city_capacity;
+//
+//        if ($load <= 0.8) {
+//            $multiplier = 1;
+//        } else {
+//            $penalty = ($load - 0.8) / 0.4;
+//            $multiplier = max(0, 1 - $penalty);
+//        }
+//
+//        $attractiveness = $baseAttractiveness * $multiplier;
+//
+//        return round($attractiveness / 0.05) * 0.05;
     }
     public function getEmployees(int $level) : int
     {

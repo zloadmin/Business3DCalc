@@ -23,6 +23,9 @@
                         <a href="{{ route('buildings.index') }}" class="text-sm font-medium text-slate-600 hover:text-slate-900">
                             {{ __('Buildings') }}
                         </a>
+                        <a href="{{ route('game-session.create') }}" class="text-sm font-medium text-slate-600 hover:text-slate-900">
+                            {{ __('Create Game Session') }}
+                        </a>
                         <a href="{{ route('buildings.create') }}" class="rounded-md bg-slate-900 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-700">
                             {{ __('Add building') }}
                         </a>
