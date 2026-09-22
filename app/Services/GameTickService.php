@@ -52,7 +52,6 @@ class GameTickService
 
         if ($session->game_time % self::TRAIN_PERIOD == 0) {
             $train = $this->createTrainItem($session);
-            var_dump($train);
         }
 
         $session->game_time = $newGameTime;

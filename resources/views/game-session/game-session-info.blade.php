@@ -5,6 +5,7 @@
     <p>Population capacity: <b>{{ $gameSession->getPopulationCapacity() }}</b></p>
     <p>Employees: <b>{{ $gameSession->getEmployees() }}</b></p>
     <p>Unemployed: <b>{{ $gameSession->getUnemployed() }}</b></p>
+    <p>Total Income: <b>{{ $gameSession->getTotalIncome() }}</b></p>
     <p>Game time: <b>{{ $gameSession->game_time }}</b></p>
     <p>Game time text: <b>{{ \Carbon\CarbonInterval::seconds($gameSession->game_time)->cascade()->forHumans() }}</b></p>
     <p>Last tick at: <b>{{ $gameSession->last_tick_at }}</b></p>

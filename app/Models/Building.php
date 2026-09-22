@@ -29,11 +29,11 @@ class Building extends Model
             'upgrade_price_coefficient' => 1.2,
             'employees'                 => 0,
             'residents_capacity'        => 10,
-            'happiness'                 => 0,
-            'attractiveness'            => 0,
+            'happiness'                 => -1,
+            'attractiveness'            => 2,
         ],
         [
-            'name'                      => 'House 22',
+            'name'                      => 'House 2',
             'type'                      => BuildingType::Living,
             'price'                     => 500,
             'income'                    => -30,
@@ -41,8 +41,8 @@ class Building extends Model
             'upgrade_price_coefficient' => 1.2,
             'employees'                 => 0,
             'residents_capacity'        => 25,
-            'happiness'                 => 0,
-            'attractiveness'            => 0,
+            'happiness'                 => -3,
+            'attractiveness'            => 4,
         ],
         [
             'name'                      => 'House 3',
@@ -53,8 +53,8 @@ class Building extends Model
             'upgrade_price_coefficient' => 1.2,
             'employees'                 => 0,
             'residents_capacity'        => 50,
-            'happiness'                 => 0,
-            'attractiveness'            => 0,
+            'happiness'                 => -8,
+            'attractiveness'            => 5,
         ],
         [
             'name'                      => 'House 4',
@@ -65,8 +65,8 @@ class Building extends Model
             'upgrade_price_coefficient' => 1.2,
             'employees'                 => 0,
             'residents_capacity'        => 90,
-            'happiness'                 => 0,
-            'attractiveness'            => 0,
+            'happiness'                 => -15,
+            'attractiveness'            => 12,
         ],
 
         // Production
@@ -170,7 +170,7 @@ class Building extends Model
             'upgrade_time_coefficient'  => 5,
             'upgrade_price_coefficient' => 1.5,
             'employees'                 => 5,
-            'happiness'                 => 4,
+            'happiness'                 => -4,
             'attractiveness'            => 10
         ],
         [
@@ -181,7 +181,7 @@ class Building extends Model
             'upgrade_time_coefficient'  => 6,
             'upgrade_price_coefficient' => 2,
             'employees'                 => 10,
-            'happiness'                 => 20,
+            'happiness'                 => -20,
             'attractiveness'            => 15
         ],
         [
@@ -192,7 +192,7 @@ class Building extends Model
             'upgrade_time_coefficient'  => 8,
             'upgrade_price_coefficient' => 3,
             'employees'                 => 30,
-            'happiness'                 => 15,
+            'happiness'                 => -15,
             'attractiveness'            => 30
         ],
         [
@@ -203,7 +203,7 @@ class Building extends Model
             'upgrade_time_coefficient'  => 10,
             'upgrade_price_coefficient' => 5,
             'employees'                 => 100,
-            'happiness'                 => 30,
+            'happiness'                 => -30,
             'attractiveness'            => 50
         ],
     ];

@@ -20,44 +20,37 @@ class Test extends Command
     public function handle()
     {
 
-//        $gameSession = GameSession::orderByDesc('id')->first();
-
-        $gameTickService = new GameTickService();
-        while (true) {
-            $gameSession = GameSession::orderByDesc('id')->first();
-            $gameTickService->tick($gameSession);
-            sleep(1);
-        }
-
-        return 0;
 
         $gameTickService = new GameTickService();
         $index = 1;
         while (true) {
             $gameSession = GameSession::orderByDesc('id')->first();
-            $bestStep = $gameSession->getBestBuildingAction();
-            if (!$bestStep) {
-                sleep(1);
-                $gameTickService->tick($gameSession);
-                continue;
-            }
-            switch ($bestStep['action']) {
-                case 'build':
-                    $this->info($index . ' Build new building ' . $bestStep['type'] . ' ' . json_encode($bestStep));
-                    $building = Building::findOrFail($bestStep['building_id']);
-                    $gameSession->buyBuilding($building);
-                    $gameTickService->tick($gameSession);
-                    $index++;
-                    break;
-                case 'upgrade':
-                    $this->info($index . ' Upgrade building ' . $bestStep['type'] . ' ' . json_encode($bestStep));
-                    $gameBuilding = GameBuilding::findOrFail($bestStep['game_building_id']);
-                    $gameSession->upgradeBuilding($gameBuilding);
-                    $gameTickService->tick($gameSession);
-                    $index++;
-                    break;
-            }
+            $bestStep = $gameSession->getNextAction();
+            $this->info(json_encode($bestStep));
+            sleep(1);
+//            if (!$bestStep) {
+//                sleep(1);
+//                $gameTickService->tick($gameSession);
+//                continue;
+//            }
 
+//            switch ($bestStep['action']) {
+//                case 'build':
+//                    $building = $bestStep['building'];
+//                    $this->info($index . ' Build new building ' . $building->name . ' ' . json_encode($bestStep));
+//                    $gameSession->buyBuilding($building);
+//                    $gameTickService->tick($gameSession);
+//                    $index++;
+//                    break;
+//                case 'upgrade':
+//                    $gameBuilding = $bestStep['game_building'];
+//                    $building = $bestStep['building'];
+//                    $this->info($index . ' Upgrade building ' . $building->name . ' ' . json_encode($bestStep));
+//                    $gameSession->upgradeBuilding($gameBuilding);
+//                    $gameTickService->tick($gameSession);
+//                    $index++;
+//                    break;
+//            }
 
         }
     }

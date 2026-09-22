@@ -65,11 +65,20 @@
                             </span>
                         </td>
                         <td class="px-4 py-3 text-right tabular-nums">{{ number_format($building->price, 0, '.', ' ') }}</td>
-                        <td class="px-4 py-3 text-right tabular-nums">{{ number_format($building->getIncome(1), 0, '.', ' ') }}</td>
+                        <td class="px-4 py-3 text-right tabular-nums">
+
+                            <span class="{{ $building->getIncome(1) < 0 ? 'text-rose-600' : 'text-emerald-600' }}">
+                                {{ $building->getIncome(1) > 0 ? '+' : '' }}{{ $building->getIncome(1) }}
+                            </span>
+                        </td>
                         <td class="px-4 py-3 text-right tabular-nums">{{ number_format((float) $building->upgrade_time_coefficient, 3, '.', '') }}</td>
                         <td class="px-4 py-3 text-right tabular-nums">{{ number_format((float) $building->upgrade_price_coefficient, 3, '.', '') }}</td>
                         <td class="px-4 py-3 text-right tabular-nums">{{ number_format($building->employees, 0, '.', ' ') }}</td>
-                        <td class="px-4 py-3 text-right tabular-nums">{{ number_format($building->residents_capacity, 0, '.', ' ') }}</td>
+                        <td class="px-4 py-3 text-right tabular-nums">
+                            <span class="{{ $building->residents_capacity < 0 ? 'text-rose-600' : 'text-emerald-600' }}">
+                                {{ $building->residents_capacity > 0 ? '+' : '' }}{{ $building->residents_capacity }}
+                            </span>
+                        </td>
                         <td class="px-4 py-3 text-right tabular-nums">
                             <span class="{{ $building->happiness < 0 ? 'text-rose-600' : 'text-emerald-600' }}">
                                 {{ $building->happiness > 0 ? '+' : '' }}{{ $building->happiness }}

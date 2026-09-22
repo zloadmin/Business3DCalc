@@ -29,6 +29,22 @@ enum BuildingType: string
     {
         return $this === self::Living;
     }
+    public function isShopping(): bool
+    {
+        return $this === self::Shopping;
+    }
+    public function isLiving(): bool
+    {
+        return $this === self::Living;
+    }
+    public function isService(): bool
+    {
+        return $this === self::Service;
+    }
+    public function isProduction(): bool
+    {
+        return $this === self::Production;
+    }
 
     /**
      * @return array<string, string>
