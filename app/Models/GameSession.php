@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\BuildingType;
 use Illuminate\Database\Eloquent\Model;
 
 class GameSession extends Model
@@ -1006,6 +1007,7 @@ class GameSession extends Model
         if ($building) {
             $needPeople = $this->getAmountPeopleToBuildOrUpgrade($building);
             // If we have unemployed
+
             if ($this->getUnemployed() >= $needPeople) {
                 return $building;
             }
@@ -1017,6 +1019,7 @@ class GameSession extends Model
             }
             // Any way we need living building
             $livingBuilding = $this->findBestBuildingCandidate('residents');
+            var_dump('Living for income ', $livingBuilding);
             if ($livingBuilding) {
                 return $livingBuilding;
             }
@@ -1079,54 +1082,72 @@ class GameSession extends Model
         // ==========================================
         // 1. Новые здания
         // ==========================================
-        foreach (Building::all() as $building) {
-            $price = $building->price;
+        if ($this->gameBuildings()->count() < 100) {
+            $newBuildings = Building::query();
+//            if($need == 'living') {
+//                $newBuildings->where('type', BuildingType::Living->value);
+//            } else {
+//                $newBuildings->where('type', '!=', BuildingType::Living->value);
+//            }
 
-            if ($price > ($money * 0.75)) {  // TODO: calc building and living price
-                continue;
-            }
+            foreach ($newBuildings->get() as $building) {
+                $price = $building->price;
 
-            $deltaH = $building->getHappiness(1);
-            $deltaA = $building->getAttractiveness(1);
-            $income = $building->getIncome(1);
-            $capacity = $building->getResidentsCapacity(1);
-            $employees = $building->getEmployees(1);
-            $isLiving = $building->type->isLiving();
+                if ($price > ($money * 0.75)) {  // TODO: calc building and living price
+                    continue;
+                }
 
-            $score = $this->calculateBuildingScore(
-                need: $need,
-                cost: $price,
-                income: $income,
-                deltaH: $deltaH,
-                deltaA: $deltaA,
-                capacity: $capacity,
-                isLiving: $isLiving,
-                isNew: true,
-                currentHappiness: $happiness,
-                currentAttractiveness: $attractiveness,
-                currentIncome: $totalIncome
-            );
+                $deltaH = $building->getHappiness(1);
+                $deltaA = $building->getAttractiveness(1);
+                $income = $building->getIncome(1);
+                $capacity = $building->getResidentsCapacity(1);
+                $employees = $building->getEmployees(1);
+                $isLiving = $building->type->isLiving();
 
-            if ($score > $bestScore) {
-                $bestScore = $score;
-                $best = [
-                    'action'             => 'build',
-                    'building'           => $building,
-                    'cost'               => $price,
-                    'income'             => $income,
-                    'employees'          => $employees,
-                    'residents_capacity' => $capacity,
-                    'happiness'          => $deltaH,
-                    'attractiveness'     => $deltaA,
-                    'score'              => $score,
-                ];
+                $score = $this->calculateBuildingScore(
+                    need: $need,
+                    cost: $price,
+                    income: $income,
+                    deltaH: $deltaH,
+                    deltaA: $deltaA,
+                    capacity: $capacity,
+                    isLiving: $isLiving,
+                    isNew: true,
+                    currentHappiness: $happiness,
+                    currentAttractiveness: $attractiveness,
+                    currentIncome: $totalIncome
+                );
+
+
+                if ($score > $bestScore) {
+                    $bestScore = $score;
+                    $best = [
+                        'action'             => 'build',
+                        'building'           => $building,
+                        'cost'               => $price,
+                        'income'             => $income,
+                        'employees'          => $employees,
+                        'residents_capacity' => $capacity,
+                        'happiness'          => $deltaH,
+                        'attractiveness'     => $deltaA,
+                        'score'              => $score,
+                    ];
+                }
             }
         }
+
 
         // ==========================================
         // 2. Улучшения существующих
         // ==========================================
         foreach ($this->gameBuildings()->with('building')->get() as $gameBuilding) {
+//            if($need == 'living' && !$gameBuilding->type->isLiving()) {
+//                continue;
+//            }
+//            if($need != 'living' && $gameBuilding->type->isLiving()) {
+//                continue;
+//            }
+
             if ($gameBuilding->upgrade_finish_at !== null) {
                 continue;
             }

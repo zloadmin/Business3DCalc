@@ -24,49 +24,49 @@ class Building extends Model
             'name'                      => 'House 1',
             'type'                      => BuildingType::Living,
             'price'                     => 100,
-            'income'                    => -10,
+            'income'                    => -50,
             'upgrade_time_coefficient'  => 5,
             'upgrade_price_coefficient' => 1.2,
             'employees'                 => 0,
             'residents_capacity'        => 10,
-            'happiness'                 => -1,
+            'happiness'                 => -3,
             'attractiveness'            => 2,
         ],
         [
             'name'                      => 'House 2',
             'type'                      => BuildingType::Living,
             'price'                     => 500,
-            'income'                    => -30,
+            'income'                    => -180,
             'upgrade_time_coefficient'  => 5,
             'upgrade_price_coefficient' => 1.2,
             'employees'                 => 0,
             'residents_capacity'        => 25,
-            'happiness'                 => -3,
-            'attractiveness'            => 4,
+            'happiness'                 => -8,
+            'attractiveness'            => 3,
         ],
         [
             'name'                      => 'House 3',
             'type'                      => BuildingType::Living,
             'price'                     => 1500,
-            'income'                    => -100,
+            'income'                    => -600,
             'upgrade_time_coefficient'  => 5,
             'upgrade_price_coefficient' => 1.2,
             'employees'                 => 0,
             'residents_capacity'        => 50,
-            'happiness'                 => -8,
-            'attractiveness'            => 5,
+            'happiness'                 => -18,
+            'attractiveness'            => 4,
         ],
         [
             'name'                      => 'House 4',
             'type'                      => BuildingType::Living,
             'price'                     => 4000,
-            'income'                    => -200,
+            'income'                    => -1500,
             'upgrade_time_coefficient'  => 5,
             'upgrade_price_coefficient' => 1.2,
             'employees'                 => 0,
             'residents_capacity'        => 90,
-            'happiness'                 => -15,
-            'attractiveness'            => 12,
+            'happiness'                 => -35,
+            'attractiveness'            => 8,
         ],
 
         // Production
@@ -74,45 +74,45 @@ class Building extends Model
             'name'                      => 'Small Windmill',
             'type'                      => BuildingType::Production,
             'price'                     => 300,
-            'income'                    => 100,
+            'income'                    => 350,
             'upgrade_time_coefficient'  => 5,
             'upgrade_price_coefficient' => 1.2,
-            'employees'                 => 4,
-            'happiness'                 => -2,
-            'attractiveness'            => -3
+            'employees'                 => 7,
+            'happiness'                 => -4,
+            'attractiveness'            => -5,
         ],
         [
             'name'                      => 'Windmill Farm',
             'type'                      => BuildingType::Production,
             'price'                     => 1500,
-            'income'                    => 500,
+            'income'                    => 1400,
             'upgrade_time_coefficient'  => 5,
             'upgrade_price_coefficient' => 1.2,
-            'employees'                 => 10,
-            'happiness'                 => -4,
-            'attractiveness'            => -6
+            'employees'                 => 20,
+            'happiness'                 => -8,
+            'attractiveness'            => -10,
         ],
         [
             'name'                      => 'Industrial Windmill',
             'type'                      => BuildingType::Production,
             'price'                     => 4500,
-            'income'                    => 1500,
+            'income'                    => 4000,
             'upgrade_time_coefficient'  => 5,
             'upgrade_price_coefficient' => 1.2,
-            'employees'                 => 50,
-            'happiness'                 => -7,
-            'attractiveness'            => -9
+            'employees'                 => 80,
+            'happiness'                 => -14,
+            'attractiveness'            => -15,
         ],
         [
             'name'                      => 'Wind Power Plant',
             'type'                      => BuildingType::Production,
             'price'                     => 10000,
-            'income'                    => 3500,
+            'income'                    => 9000,
             'upgrade_time_coefficient'  => 5,
             'upgrade_price_coefficient' => 1.2,
-            'employees'                 => 150,
-            'happiness'                 => -10,
-            'attractiveness'            => -12
+            'employees'                 => 220,
+            'happiness'                 => -20,
+            'attractiveness'            => -22,
         ],
 
         // Service
@@ -120,45 +120,45 @@ class Building extends Model
             'name'                      => 'Police Booth',
             'type'                      => BuildingType::Service,
             'price'                     => 200,
-            'income'                    => -50,
+            'income'                    => -350,
             'upgrade_time_coefficient'  => 5,
             'upgrade_price_coefficient' => 1.2,
-            'employees'                 => 5,
-            'happiness'                 => 15,
-            'attractiveness'            => 5
+            'employees'                 => 7,
+            'happiness'                 => 18,
+            'attractiveness'            => 6,
         ],
         [
             'name'                      => 'Police Station',
             'type'                      => BuildingType::Service,
             'price'                     => 1000,
-            'income'                    => -300,
+            'income'                    => -2200,
             'upgrade_time_coefficient'  => 5,
             'upgrade_price_coefficient' => 1.2,
-            'employees'                 => 15,
-            'happiness'                 => 5,
-            'attractiveness'            => 20
+            'employees'                 => 22,
+            'happiness'                 => 14,
+            'attractiveness'            => 22,
         ],
         [
             'name'                      => 'Clinic',
             'type'                      => BuildingType::Service,
             'price'                     => 300,
-            'income'                    => -100,
+            'income'                    => -700,
             'upgrade_time_coefficient'  => 5,
             'upgrade_price_coefficient' => 1.2,
-            'employees'                 => 7,
-            'happiness'                 => 15,
-            'attractiveness'            => 20
+            'employees'                 => 9,
+            'happiness'                 => 16,
+            'attractiveness'            => 18,
         ],
         [
             'name'                      => 'Medical Center',
             'type'                      => BuildingType::Service,
             'price'                     => 3000,
-            'income'                    => -1000,
+            'income'                    => -6500,
             'upgrade_time_coefficient'  => 5,
             'upgrade_price_coefficient' => 1.2,
-            'employees'                 => 30,
-            'happiness'                 => 30,
-            'attractiveness'            => 50
+            'employees'                 => 45,
+            'happiness'                 => 38,
+            'attractiveness'            => 45,
         ],
 
         // Shopping
@@ -166,45 +166,45 @@ class Building extends Model
             'name'                      => 'Corner Shop',
             'type'                      => BuildingType::Shopping,
             'price'                     => 1000,
-            'income'                    => 500,
+            'income'                    => 800,
             'upgrade_time_coefficient'  => 5,
             'upgrade_price_coefficient' => 1.5,
-            'employees'                 => 5,
-            'happiness'                 => -4,
-            'attractiveness'            => 10
+            'employees'                 => 10,
+            'happiness'                 => -8,
+            'attractiveness'            => 7,
         ],
         [
             'name'                      => 'Supermarket',
             'type'                      => BuildingType::Shopping,
             'price'                     => 10000,
-            'income'                    => 3000,
+            'income'                    => 5000,
             'upgrade_time_coefficient'  => 6,
             'upgrade_price_coefficient' => 2,
-            'employees'                 => 10,
-            'happiness'                 => -20,
-            'attractiveness'            => 15
+            'employees'                 => 30,
+            'happiness'                 => -22,
+            'attractiveness'            => 10,
         ],
         [
             'name'                      => 'Shopping Center',
             'type'                      => BuildingType::Shopping,
             'price'                     => 100000,
-            'income'                    => 15000,
+            'income'                    => 22000,
             'upgrade_time_coefficient'  => 8,
             'upgrade_price_coefficient' => 3,
-            'employees'                 => 30,
-            'happiness'                 => -15,
-            'attractiveness'            => 30
+            'employees'                 => 90,
+            'happiness'                 => -35,
+            'attractiveness'            => 18,
         ],
         [
             'name'                      => 'Grand Mall',
             'type'                      => BuildingType::Shopping,
             'price'                     => 1000000,
-            'income'                    => 300000,
+            'income'                    => 280000,
             'upgrade_time_coefficient'  => 10,
             'upgrade_price_coefficient' => 5,
-            'employees'                 => 100,
-            'happiness'                 => -30,
-            'attractiveness'            => 50
+            'employees'                 => 280,
+            'happiness'                 => -60,
+            'attractiveness'            => 28,
         ],
     ];
     /**
@@ -318,30 +318,26 @@ class Building extends Model
     }
     public function getHappiness(int $level = 1): float
     {
-        return round(
-                ($this->happiness * (1 + log($level, 2))) / 0.02
-            ) * 0.02;
+        $multiplier = 1 + (log($level, 2) * 1.35); // быстрее растёт
+
+        // Если значение отрицательное — усиливаем штраф сильнее
+        if ($this->happiness < 0) {
+            $multiplier *= 1.25;
+        }
+
+        return round(($this->happiness * $multiplier) / 0.02) * 0.02;
     }
+
     public function getAttractiveness(int $level = 1): float
     {
-        return round(
-                ($this->attractiveness * (1 + log($level, 2))) / 0.04
-            ) * 0.04;
+        $multiplier = 1 + (log($level, 2) * 1.25);
 
-//        $baseAttractiveness = 4 * (1 + log($level, 2));
-//
-//        $load = $this->city_population / $this->city_capacity;
-//
-//        if ($load <= 0.8) {
-//            $multiplier = 1;
-//        } else {
-//            $penalty = ($load - 0.8) / 0.4;
-//            $multiplier = max(0, 1 - $penalty);
-//        }
-//
-//        $attractiveness = $baseAttractiveness * $multiplier;
-//
-//        return round($attractiveness / 0.05) * 0.05;
+        // Штрафы привлекательности тоже усиливаем
+        if ($this->attractiveness < 0) {
+            $multiplier *= 1.2;
+        }
+
+        return round(($this->attractiveness * $multiplier) / 0.04) * 0.04;
     }
     public function getEmployees(int $level) : int
     {
