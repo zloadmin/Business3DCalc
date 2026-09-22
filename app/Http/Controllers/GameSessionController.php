@@ -44,8 +44,8 @@ class GameSessionController extends Controller
         $buildingCollection = Building::query()->orderBy('id')->get();
         $gameBuildings = $gameSession->gameBuildings()->with('building')->get();
         $gameTickService->tick($gameSession);
-
-        return view('game-session.show', compact('gameSession', 'gameBuildings', 'buildingCollection'));
+        $trainItems = $gameSession->trainItems()->latest()->get();
+        return view('game-session.show', compact('gameSession', 'gameBuildings', 'buildingCollection', 'trainItems'));
     }
 
     public function buyBuilding(GameSession $gameSession, Request $request)

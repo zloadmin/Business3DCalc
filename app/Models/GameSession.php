@@ -17,6 +17,14 @@ class GameSession extends Model
     {
         return $this->hasMany(GameBuilding::class);
     }
+    public function trainItems(): \Illuminate\Database\Eloquent\Relations\HasMany|GameSession
+    {
+        return $this->hasMany(TrainItem::class);
+    }
+    public function getPopulation() : int
+    {
+        return $this->trainItems()->sum('result');
+    }
 
     /**
      * @param Building $building
@@ -25,6 +33,7 @@ class GameSession extends Model
     public function buyBuilding(Building $building): void
     {
         if ($building->price > $this->money) throw new \LogicException('Not enough money');
+        if ($building->employees > $this->getUnemployed()) throw new \LogicException('Not enough unemployed');
 
         $this->gameBuildings()->create([
             'building_id'    => $building->id,
@@ -42,6 +51,8 @@ class GameSession extends Model
 
         // 0 check enough money
         if ($upgradeMoney > $this->money) throw new \LogicException('Not enough money');
+        // get next employee amount, get current, and get required amount
+
         // 1 get seconds to next level
         $upgradeTime = $building->building->getUpgradeTime($nextLevel);
 
@@ -59,14 +70,15 @@ class GameSession extends Model
 
         return $this->last_tick_at->diffInSeconds(now());
     }
+
     public function getGameSeconds(): int
     {
-        return (int) floor(
+        return (int)floor(
             $this->getRealSeconds() * $this->time_speed
         );
     }
 
-    public function getHappiness() : float
+    public function getHappiness(): float
     {
         $base = self::BASE_HAPPINESS; // 50.0
 
@@ -75,7 +87,14 @@ class GameSession extends Model
 
         foreach ($this->gameBuildings()->with('building')->get() as $gameBuilding) {
             $happiness = $gameBuilding->building->getHappiness($gameBuilding->level);
+
+//            if($gameBuilding->building->type->providesResidents()) {
+//                $employees = 1; // TODO: default weight of living houses
+//            } else {
+//                $employees = $gameBuilding->building->getEmployees($gameBuilding->level);
+//            }
             $employees = $gameBuilding->building->getEmployees($gameBuilding->level);
+
 
             if ($employees <= 0) {
                 continue;
@@ -97,7 +116,8 @@ class GameSession extends Model
             min(100, $base + $averageHappiness * 0.5)
         );
     }
-    public function getAttractiveness() : float
+
+    public function getAttractiveness(): float
     {
         $base = self::BASE_ATTRACTIVENESS; // 50.0
 
@@ -129,37 +149,62 @@ class GameSession extends Model
         );
     }
 
-    function getBestBuildingAction(): ?array {
+    public function getPopulationCapacity(): int
+    {
+        $result = 0;
+        foreach ($this->gameBuildings()->with('building')->get() as $gameBuilding) {
+            $result += $gameBuilding->building->getResidentsCapacity($gameBuilding->level);
+        }
+        return $result;
+    }
+
+    public function getEmployees(): int
+    {
+        $result = 0;
+        foreach ($this->gameBuildings()->with('building')->get() as $gameBuilding) {
+            $result += $gameBuilding->building->getEmployees($gameBuilding->level);
+        }
+        return $result;
+    }
+
+    public function getUnemployed(): int
+    {
+
+        return $this->getPopulation() -  $this->getEmployees();
+    }
+
+    function getBestBuildingAction(): ?array
+    {
 
 
         $totalBuildings = $this->gameBuildings()->count();
         $candidates = [];
-        $buildingLimit  = 100;
+        $buildingLimit = 100;
 
         // ---------- 1. Evaluate upgrades of existing buildings ----------
         foreach ($this->gameBuildings()->with('building')->get() as $idx => $gameBuilding) {
-            $name  = $gameBuilding->building->name;
+            $name = $gameBuilding->building->name;
             $level = $gameBuilding->level;
             $cost = $gameBuilding->building->getUpgradePrice($gameBuilding->level + 1);
 
             if ($cost > $this->money) continue; // can't afford
-            if($gameBuilding->upgrade_finish_at !== null) continue; // upgrading right now
+            if ($gameBuilding->upgrade_finish_at !== null) continue; // upgrading right now
 
             $deltaI = $gameBuilding->building->getIncome($gameBuilding->level + 1);
             $deltaH = $gameBuilding->building->getHappiness($gameBuilding->level + 1);
             $deltaA = $gameBuilding->building->getAttractiveness($gameBuilding->level + 1);
-            $time   = $gameBuilding->building->getUpgradeTime($gameBuilding->level + 1);
+            $time = $gameBuilding->building->getUpgradeTime($gameBuilding->level + 1);
 
             $candidates[] = [
-                'action'  => 'upgrade',
-                'type'    => $name,
-                'index'   => $idx,
-                'level'   => $level,
-                'cost'    => $cost,
-                'time'    => $time,
-                'delta_i' => $deltaI,
-                'delta_h' => $deltaH,
-                'delta_a' => $deltaA,
+                'action'           => 'upgrade',
+                'type'             => $name,
+                'index'            => $idx,
+                'level'            => $level,
+                'cost'             => $cost,
+                'time'             => $time,
+                'delta_i'          => $deltaI,
+                'delta_h'          => $deltaH,
+                'delta_a'          => $deltaA,
                 'game_building_id' => $gameBuilding->id,
             ];
         }
@@ -173,18 +218,19 @@ class GameSession extends Model
                 $deltaI = $building->getIncome(1);
                 $deltaH = $building->getHappiness(1);
                 $deltaA = $building->getAttractiveness(1);
-                $time   = $building->getUpgradeTime(2);
+                $time = $building->getUpgradeTime(2);
 
                 $candidates[] = [
-                    'action'  => 'build',
-                    'type'    => $building->name,
-                    'index'   => null,
-                    'level'   => 1, // will become 2
-                    'cost'    => $cost,
-                    'time'    => $time,
-                    'delta_i' => $deltaI,
-                    'delta_h' => $deltaH,
-                    'delta_a' => $deltaA,
+                    'action'      => 'build',
+                    'type'        => $building->name,
+                    'index'       => null,
+                    'level'       => 1,
+                    // will become 2
+                    'cost'        => $cost,
+                    'time'        => $time,
+                    'delta_i'     => $deltaI,
+                    'delta_h'     => $deltaH,
+                    'delta_a'     => $deltaA,
                     'building_id' => $building->id,
                 ];
             }

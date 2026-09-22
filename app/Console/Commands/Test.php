@@ -20,6 +20,17 @@ class Test extends Command
     public function handle()
     {
 
+//        $gameSession = GameSession::orderByDesc('id')->first();
+
+        $gameTickService = new GameTickService();
+        while (true) {
+            $gameSession = GameSession::orderByDesc('id')->first();
+            $gameTickService->tick($gameSession);
+            sleep(1);
+        }
+
+        return 0;
+
         $gameTickService = new GameTickService();
         $index = 1;
         while (true) {

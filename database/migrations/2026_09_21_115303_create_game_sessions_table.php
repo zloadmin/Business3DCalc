@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->bigInteger('money')->default(0);
-//            $table->unsignedBigInteger('population')->default(0);
+            $table->unsignedBigInteger('population')->default(0);
             $table->unsignedBigInteger('game_time')->default(0);
             $table->timestamp('last_tick_at')->nullable();
             $table->decimal('time_speed', 8, 2)->default(1);
