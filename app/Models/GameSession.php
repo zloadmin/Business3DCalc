@@ -1019,7 +1019,6 @@ class GameSession extends Model
             }
             // Any way we need living building
             $livingBuilding = $this->findBestBuildingCandidate('residents');
-            var_dump('Living for income ', $livingBuilding);
             if ($livingBuilding) {
                 return $livingBuilding;
             }
