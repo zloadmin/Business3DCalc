@@ -207,6 +207,7 @@ class Building extends Model
             'attractiveness'            => 28,
         ],
     ];
+
     /**
      * Get the attributes that should be cast.
      *
@@ -215,21 +216,22 @@ class Building extends Model
     protected function casts(): array
     {
         return [
-            'type'                => BuildingType::class,
-            'price'               => 'integer',
-            'income'              => 'integer',
+            'type'                     => BuildingType::class,
+            'price'                    => 'integer',
+            'income'                   => 'integer',
             'upgrade_time_coefficient' => 'decimal:3',
-            'employees_count'     => 'integer',
-            'residents_count'     => 'integer',
-            'happiness'           => 'integer',
-            'attractiveness'      => 'integer',
+            'employees_count'          => 'integer',
+            'residents_count'          => 'integer',
+            'happiness'                => 'integer',
+            'attractiveness'           => 'integer',
         ];
     }
 
-    public function getIncome(int $level = 1): float
+    public function getIncome(int $level = 1): int
     {
-        return round($this->income * $level) * 5;
+        return (int)floor(floor($this->income * $level) * 5);
     }
+
     public function getIncomeBeforeNextLevel(int $level): float
     {
         $time = $this->getUpgradeTime($level);
@@ -288,6 +290,7 @@ class Building extends Model
         }
         return $total;
     }
+
     public function getTotalIncome(int $to_level): float
     {
         $total = 0;
@@ -313,9 +316,12 @@ class Building extends Model
 
     public function getResidentsCapacity(int $level): int
     {
-        if ($this->type->providesResidents()) return $this->residents_capacity * pow($level, 0.5);
-        return 0;
+        if (!$this->type->providesResidents()) return 0;
+        return (int) floor(
+            $this->residentsCapacity * sqrt($level)
+        );
     }
+
     public function getHappiness(int $level = 1): float
     {
         $multiplier = 1 + (log($level, 2) * 1.35); // быстрее растёт
@@ -339,7 +345,8 @@ class Building extends Model
 
         return round(($this->attractiveness * $multiplier) / 0.04) * 0.04;
     }
-    public function getEmployees(int $level) : int
+
+    public function getEmployees(int $level): int
     {
 
         return floor(round($this->employees * pow($level, 0.4)));
